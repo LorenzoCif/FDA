@@ -50,7 +50,7 @@ for(i in 1:10){
 # hr
 plot(hr[[10]], type = "l")
 sum(hr[[10]]==0)
-# imputiamo la media dei due valori corretti più vicini
+# imputiamo la media dei due valori corretti piÃ¹ vicini
 hr[[10]][1537:1556] <- mean(hr[[10]][1536], hr[[10]][1557])
 hr[[10]][1896:1918] <- mean(hr[[10]][1895], hr[[10]][1919])
 plot(hr[[10]], type = "l")
@@ -83,8 +83,8 @@ br.clean <- function(br){
 br <- sapply(br, br.clean)
 
 # da dominio temporale a domninio spaziale --------------------------------
-# modifichiamo le serie hr e br facendo sì che il loro dominio sia lo spazio (uguale
-# per tutti i soggetti) e non più il tempo (serie di lunghezze diverse per ogni
+# modifichiamo le serie hr e br facendo sÃ¬ che il loro dominio sia lo spazio (uguale
+# per tutti i soggetti) e non piÃ¹ il tempo (serie di lunghezze diverse per ogni
 # soggetto).
 
 # tempi in cui cambia la pendenza del percorso (dai file con le note, presenti
@@ -110,13 +110,13 @@ dt[,1] <- int[,1]
 dt[,2:4] <- int[,2:4]-int[,1:3]
 dt
 
-# velocità medie di ciascun tratto a pendenza costante 
+# velocitÃ  medie di ciascun tratto a pendenza costante 
 # (assumendo velocita costante)
 vel = matrix(NA, 10, 4)
 vel = t(apply(dt, 1, function(x) flessi/x)) # velocita' = spazio/tempo
 vel
 
-# velocità in ogni istante temporale
+# velocitÃ  in ogni istante temporale
 velfun = list()
 for (i in 1:10){
   velfun[[i]] = c(rep(vel[i,1], dt[i,1]), 
@@ -125,7 +125,7 @@ for (i in 1:10){
                   rep(vel[i,4], dt[i,4]))
 }
 
-# lisciamento delle velocità
+# lisciamento delle velocitÃ 
 # splines di lisciamento in ogni curva
 smoothspeed =list()
 for (i in 1:10){
@@ -145,14 +145,14 @@ for (i in 1:10){
   space[[i]] = cumsum(velfun[[i]]) 
 }
 lapply(space, range) # okay
-# le serie che erano più lunghe nel tempo avranno osservazioni
+# le serie che erano piÃ¹ lunghe nel tempo avranno osservazioni
 # in griglie piu fitte nello spazio, ma sempre entro il range (0, 6.1)
 
 # scegliamo 200 punti equispaziati dove osservare hr e br
 space_ob <- seq(0, 6.1, length = 200)
 
 # in corrispondenza di ciascuno dei punti della griglia, mettiamo il valore della serie
-# rilveato se presente o il valore rilevato più vicino
+# rilveato se presente o il valore rilevato piÃ¹ vicino
 
 # hr
 HR <- matrix(NA, ncol = 10, nrow = length(space_ob))
@@ -279,8 +279,8 @@ persp(grid, grid, varcov.M, theta = -45, phi = 25, r  = 3, expand = 0.5,
       ticktype = "detailed", xlab = "spazio", ylab = "spazio", 
       zlab = "Covarianza hr")
 image(grid, grid, varcov.M)
-# all'inizio c'è un trend crescente molto forte
-# se non consideriamo il pezzo iniziale vediamo meglio la variabilità nei km successivi
+# all'inizio c'Ã¨ un trend crescente molto forte
+# se non consideriamo il pezzo iniziale vediamo meglio la variabilitÃ  nei km successivi
 grid <- seq(0.5, 6.1, length = 100)
 varcov.M <- eval.bifd(grid, grid, cov.hr)
 persp(grid, grid, varcov.M, theta = -45, phi = 25, r  = 3, expand = 0.5,
@@ -299,13 +299,13 @@ plot(hr.pca)
 par(mfrow = c(1,1))
 # prima:
 # riflette l'andamento generale: varianza circa costante dopo il primo tratto
-# ma non cattura la variabilità iniziale
+# ma non cattura la variabilitÃ  iniziale
 # seconda:
 # cattura la variabilita iniziale e un po' nell'ultima fase (quella pianeggiante)
 # le curve + e - si invertono: chi ha battiti piu alti della media
-# all'inizio, può averli piu bassi nell'ultima fase
+# all'inizio, puÃ² averli piu bassi nell'ultima fase
 # terza:
-# cattura la variabilità dalla fase in cui inizia la salita e nell'ultimo tratto 
+# cattura la variabilitÃ  dalla fase in cui inizia la salita e nell'ultimo tratto 
 # pianeggiante
 
 # MODELLI PER I TEMPI DI ARRIVO -------------------------------------------
@@ -381,8 +381,8 @@ lines(betaest + 2*hr.reg.std$betastderrlist[[2]], col = "red4", lty = 1)
 lines(betaest - 2*hr.reg.std$betastderrlist[[2]], col = "red4", lty = 1)
 abline(v = cumsum(c(1.3, 1.2, 1, 2.6)), lty = "dotted", lwd = 2, col = "grey70") 
 
-# se il beta è positivo, all'aumentare di hr il tempo aumenta (arriva dopo)
-# se il beta è negativo, all'aumentare di hr il tempo diminuisce (arriva prima)
+# se il beta Ã¨ positivo, all'aumentare di hr il tempo aumenta (arriva dopo)
+# se il beta Ã¨ negativo, all'aumentare di hr il tempo diminuisce (arriva prima)
 
 # in salita: all'aumentare di hr arriva dopo
 # in discesa:  all'aumentare di hr arriva prima
