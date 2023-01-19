@@ -1,2 +1,2 @@
 # FDA
-Functional data analysisy course
+Functional data analysis course
